@@ -30,6 +30,11 @@ async function run() {
 		const cartCollection = client.db("bistroDb").collection("cart");
 		const reviewCollection = client.db("bistroDb").collection("reviews");
 
+		app.get('/users', async(req,res)=> {
+			const result = await  userCollection.find().toArray();
+			res.send(result);
+		})
+
 		app.post("/users", async (req, res) => {
 			const user = req.body;
 			// insert email if user doesn't exists:
@@ -48,8 +53,7 @@ async function run() {
 
 		app.patch(
 			"/users/admin/:id",
-			verifyToken,
-			verifyAdmin,
+
 			async (req, res) => {
 				const id = req.params.id;
 				const filter = { _id: new ObjectId(id) };
@@ -66,7 +70,7 @@ async function run() {
 			}
 		);
 
-		app.delete("/users/:id", verifyToken, verifyAdmin, async (req, res) => {
+		app.delete("/users/:id", async (req, res) => {
 			const id = req.params.id;
 			const query = { _id: new ObjectId(id) };
 			const result = await userCollection.deleteOne(query);
