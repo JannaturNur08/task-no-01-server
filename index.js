@@ -31,6 +31,7 @@ async function run() {
 		const menuCollection = client.db("bistroDb").collection("menu");
 		const cartCollection = client.db("bistroDb").collection("cart");
 		const reviewCollection = client.db("bistroDb").collection("reviews");
+		const paymentCollection = client.db("bistroDb").collection("payments");
 
 		// jwt related api
 		app.post("/jwt", async (req, res) => {
